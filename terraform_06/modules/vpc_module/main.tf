@@ -127,29 +127,3 @@ resource "aws_key_pair" "Public-key" {
   key_name   = "Public-key"
   public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ/0Ny2FEPFKWbuX40oi9A1EzihJAszE31Rh/RvsPWMI dezeabasili@DESKTOP-9L5GVCJ"
 }
-
-resource "aws_instance" "Front-End" {
-  ami = "ami-0e2c8caa4b6378d8c"
-  instance_type = "t2.micro"
-  subnet_id = aws_subnet.Public_subnet.id
-  vpc_security_group_ids = [aws_security_group.Front-End.id]
-  key_name = aws_key_pair.Public-key.key_name
-  tags = {
-    Name = "Front-End"
-  }
-}
-
-resource "aws_instance" "Back-End" {
-  ami = "ami-0e2c8caa4b6378d8c"
-  instance_type = "t2.micro"
-  subnet_id = aws_subnet.Private_subnet.id
-  vpc_security_group_ids = [aws_security_group.Back-End.id]
-  key_name = aws_key_pair.Public-key.key_name
-  tags = {
-    Name = "Back-End"
-  }
-}
-
-output "security_groups_output" {
-  value = aws_instance.Back-End.vpc_security_group_ids
-}
